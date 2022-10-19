@@ -1,28 +1,18 @@
-class Slider{
-    constructor(elemSelector){
-        this.currentSlide = 0;
-        this.sliderSelector = elemSelector;
-        this.elem= null;
-        this.slider = null;
-        this.slides= null;
-        this.prev =null;
-        this.next = null;
-        this.dots= [];
 
-        generateSlider();{
-            this.slider = document.querySelector(this.sliderSelector);
-            this.slider.classLisst.add("slider");
+const slides= document.querySelectorAll('.slides')
+slides.foreach((s,i)=>s.style.transform=
+`translateX(${100*i})`);
 
-            const slidesCnt = document.createElement("div");
-            slidesCnt.classLisst.add("slider-slides-cnt");
-            
-            this.slides =this.slider.ch
+const slider = document.querySelector('.slider')
 
-            while(this.slides.len)
-        }
-         
-    }
-}
+
+
+
+
+
+
+
+
 
 // notatnik z zajęć
 const main = document.querySelector('main')
