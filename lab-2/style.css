@@ -2,7 +2,7 @@
     width: 600px;
     height: 400px;
     margin: 0 auto;
-    /* overflow: hidden; */
+    overflow: hidden;
     position: relative;
     display: flex;
 }
@@ -43,7 +43,29 @@
     right: 6%;
     transform: translate(50%, -50%);
   }
+.dots{
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+}
+.dots__dot{
+    border:none;
+    background-color: gray;
+    opacity: 0.7;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
+    margin: 0 1.76rem 0 0;
+    cursor: pointer;
+    transition: all 0.5s;
+}
 
+.dots__dot--active{
+    background-color: #fff;
+    opacity: 1;
+}
 /* @keyframes pociag-w-lewo {
     0% {
         transform: translateX(0);
