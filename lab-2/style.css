@@ -7,7 +7,7 @@
     display: flex;
 }
 
-.slider .slide {
+.slide {
     /* position: absolute; */
     display: flex;
     align-items: center;
