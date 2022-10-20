@@ -6,21 +6,41 @@ const btnRight = document.querySelector('.slider_btn_right');
 const btnLeft = document.querySelector('.slider_btn_left');
 const slider = document.querySelector('.slider')
 // document.querySelector('body').style.backgroundColor='#222';
-btnLeft.style.backgroundColor='#222';
 
 
 // slides.style.backgroundColor='#222';
 let slideNumber = 0;
+let amountSlide = slides.length;
 slides.forEach((s,i)=>(s.style.transform=
 `translateX(${100*i}%)`));
 
 slider.style.backgroundColor='#222';
-slider.style.transform = 'scale(0.8) translateX(-800px)'
+// slider.style.transform = 'scale(0.8) translateX(-800px)'
 btnRight.addEventListener('click',function(){
- slideNumber++;
-slides.forEach((s,i)=>(s.style.transform=
-`translateX(${100*(i-slideNumber)}%)`));
-})
+    if(slideNumber===amountSlide-1){
+        slideNumber =0;
+    }else{
+
+        slideNumber++;
+    }
+    slides.forEach((s,i)=>(s.style.transform=
+    `translateX(${100*(i-slideNumber)}%)`));
+    
+
+});
+btnLeft.addEventListener('click',function(){
+    if(slideNumber===0){
+        slideNumber =amountSlide-1;
+    }else{
+
+        slideNumber--;
+    }
+    
+    slides.forEach((s,i)=>(s.style.transform=
+    `translateX(${100*(i-slideNumber)}%)`));
+    
+
+});
 
 
 
