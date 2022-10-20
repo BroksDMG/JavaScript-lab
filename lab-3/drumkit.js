@@ -1,34 +1,25 @@
-'use strict';
-// notatnik 
-document.addEventListener('keypress', onKeyPress)
+const audioEls = document.querySelectorAll("audio");
 
-const KeyToSound = {
-    'a': 's1',
-    's': 's2',
+document.addEventListener("keypress", onKeyPress);
+
+const KeyToSound = {};
+for (let i = 1; i <= audioEls.length; i++) {
+  KeyToSound[i] = audioEls[i - 1].id;
 }
-function onKeyPress(ev) {
-    // const key = event.key
-    // logika mapowania key -> sound
-    const sound = KeyToSound[ev.key]
-    switch (ev.key) {
-        case 'a':
-            sound = SOUND.clap
-            // clap
-            break;
-        case 's':
-            sound = SOUND.hihat
-            // hihat
-            break;
-    }
-    playSound(sound)
+
+function onKeyPress(event) {
+  const keys = Object.keys(KeyToSound);
+  if (keys.includes(event.key)) {
+    const sound = KeyToSound[event.key];
+    playSound(sound);
+  }
 }
 
 function playSound(sound) {
-    if (!sound) {
-        return
-    }
-    const audioTag = document.querySelector(`#${clap}`)
-    audioTag.currentTime = 0
-    audioTag.play()
+  const audioTag = document.querySelector("#" + sound);
+  audioTag.currentTime = 0;
+  audioTag.play();
 }
+
+function recordSound() {}
 // Date.now()
