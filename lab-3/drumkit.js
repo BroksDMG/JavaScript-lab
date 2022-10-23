@@ -1,7 +1,7 @@
 const audioEls = document.querySelectorAll("audio");
 
 document.addEventListener("keypress", onKeyPress);
-
+console.log(onKeyPress);
 const KeyToSound = {};
 for (let i = 1; i <= audioEls.length; i++) {
   KeyToSound[i] = audioEls[i - 1].id;
