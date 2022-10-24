@@ -1,5 +1,5 @@
 const audioEls = document.querySelectorAll("audio");
-
+const recordbtn = document.querySelector('.record-btn');
 document.addEventListener("keypress", onKeyPress);
 console.log(onKeyPress);
 const KeyToSound = {};
@@ -23,3 +23,8 @@ function playSound(sound) {
 
 function recordSound() {}
 // Date.now()
+
+//przypięcie klawiszy do dzwięku{
+    //wyswietlenie klawisza w consoli
+    //
+//}
