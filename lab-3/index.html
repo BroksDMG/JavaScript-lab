@@ -8,64 +8,40 @@
     
 </head>
 <body>
-    <div class="sounds">
-    <div class="sound">
-        1
-        <audio src="./sounds/clap.wav" id="s1"></audio>
-    </div>
-    <div class="sound">
-        2
-        <audio src="./sounds/hihat.wav"  id="s2"></audio>   
-    </div>
-    <div class="sound">
-        3
-        <audio src="./sounds/kick.wav"  id="s3"</audio>
-    </div>
-    <div class="sound">
-        4
-        <audio src="./sounds/openhat.wav"  id="s4"></audio>
-    </div>
-    <div class="sound">
-        5
-        <audio src="./sounds/boom.wav"  id="s5"></audio>
-    </div>
-    <div class="sound">
-        6
-        <audio src="./sounds/ride.wav"  id="s6"></audio>
-    </div>
-    <div class="sound">
-        7
-        <audio src="./sounds/snare.wav"  id="s7"</audio>
-    </div>
-    <div class="sound">
-        8
-        <audio src="./sounds/tom.wav"  id="s8"></audio>
-    </div>
-    <div class="sound">
-        9
-        <audio src="./sounds/tink.wav"  id="s9"></audio>
-    </div>
-    </div>
-    <div class="records">
+<div class="sounds">
+    <div data-note="s1" class="sound clap">1</div>
+    <div data-note="s2" class="sound hihat">2</div>
+    <div data-note="s3" class="sound kick">3</div>
+    <div data-note="s4" class="sound openhat">4</div>
+    <div data-note="s5" class="sound boom">5</div>
+    <div data-note="s6" class="sound ride">6</div>
+    <div data-note="s7" class="sound snare">7</div>
+    <div data-note="s8" class="sound tom">8</div>
+    <div data-note="s9" class="sound tink">9</div>
+</div>
+<audio src="./sounds/clap.wav" id="s1"></audio>
+<audio src="./sounds/hihat.wav"  id="s2"></audio>   
+<audio src="./sounds/kick.wav"  id="s3"></audio>
+<audio src="./sounds/openhat.wav"  id="s4"></audio>
+<audio src="./sounds/boom.wav"  id="s5"></audio>
+<audio src="./sounds/ride.wav"  id="s6"></audio>
+<audio src="./sounds/snare.wav"  id="s7"></audio>
+<audio src="./sounds/tom.wav"  id="s8"></audio>
+<audio src="./sounds/tink.wav"  id="s9"></audio>
+   
+<div class="records">
         <div class="record">
-            Record 1:
             <button class="btn play-btn">Play</button>
             <button class="btn stop-btn">stop</button>   
             <button class="btn record-btn">Record</button>
+        </div>
+        <div class="record">
+            Record 1:
         </div>
         <div class="record">
             Record 2:
-            <button class="btn play-btn">Play</button>
-            <button class="btn stop-btn">stop</button>   
-            <button class="btn record-btn">Record</button>
-        </div>
-        <div class="record">
-            Record 3:
-            <button class="btn play-btn">Play</button>
-            <button class="btn stop-btn">stop</button>   
-            <button class="btn record-btn">Record</button>
         </div>
         <button class=" btn add-btn">add</button>
+    </body> 
     <script src="drumkit.js"></script>
-</body> 
 </html>

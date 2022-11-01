@@ -1,30 +1,82 @@
-const audioEls = document.querySelectorAll("audio");
-const recordbtn = document.querySelector('.record-btn');
-document.addEventListener("keypress", onKeyPress);
-console.log(onKeyPress);
-const KeyToSound = {};
-for (let i = 1; i <= audioEls.length; i++) {
-  KeyToSound[i] = audioEls[i - 1].id;
+'use strict'
+const sounds =document.querySelectorAll('.sound');
+const recordbtn =document.querySelector('.record-btn');
+const stopbtn=document.querySelector('.stop-btn');
+const playbtn =document.querySelector('.play-btn');
+let recordingTime;
+let songContainer;
+
+const keyMap =[...sounds].reduce((map,key)=>{
+map[key.dataset.note]=key
+return map
+},{})
+
+recordbtn.addEventListener('click',recording);
+stopbtn.addEventListener('click',stopSong);
+playbtn.addEventListener('click',playSong);
+function recording(){
+ recordbtn.classList.toggle('active');
+  if(isRecordng()){
+    startRecording()
+  }else 
+  stopRecording();
+}
+function isRecordng(){
+  return recordbtn !=null&& recordbtn.classList.contains('active');
+}
+function startRecording(){
+  console.log("is recording");
+  recordingTime=Date.now()
+  songContainer =[]
+  playbtn.classList.remove('show');
+  stopbtn.classList.remove('show');
+}
+function stopRecording(){
+  playSong()
+  playbtn.classList.add('show');
+  stopbtn.classList.add('show');
+}
+function playSong(){
+  if(songContainer.length===0) return
+  songContainer.forEach(note=>{
+    setTimeout(()=>{
+      playNote(keyMap[note.key])
+    },note.startTime)
+  })
+}
+/////////////////////seting keys and sound///////////////
+const keys={
+  sound:["q","w","e","r","t","y","u","i","o",]
+}
+//if index != -1 play sound at position qwww
+document.addEventListener('keydown',e=>{
+  if(e.repeat) return
+ const key=e.key
+ const keyIndex=keys.sound.indexOf(key)
+ if(keyIndex>-1)playNote(sounds[keyIndex]);
+});
+// play sound for each element you click
+sounds.forEach(sound=>{
+  sound.addEventListener('click',()=>playNote(sound));
+});
+//playing sound
+function playNote(sound){
+  if(isRecordng()) recordNote(sound.dataset.note)
+  const noteAudio =document.getElementById(sound.dataset.note);
+  noteAudio.currentTime=0;
+  noteAudio.play();
+  sound.classList.add('active');
+  noteAudio.addEventListener('ended',()=>{
+    sound.classList.remove('active');
+  })
+}
+function recordNote(note){
+  songContainer.push({
+    key:note,
+    startTime:Date.now()- recordingTime,
+  })
 }
 
-function onKeyPress(event) {
-  const keys = Object.keys(KeyToSound);
-  if (keys.includes(event.key)) {
-    const sound = KeyToSound[event.key];
-    playSound(sound);
-  }
+function stopSong(){
+
 }
-
-function playSound(sound) {
-  const audioTag = document.querySelector("#" + sound);
-  audioTag.currentTime = 0;
-  audioTag.play();
-}
-
-function recordSound() {}
-// Date.now()
-
-//przypięcie klawiszy do dzwięku{
-    //wyswietlenie klawisza w consoli
-    //
-//}
