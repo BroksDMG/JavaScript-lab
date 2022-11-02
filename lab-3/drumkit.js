@@ -3,19 +3,21 @@ const sounds =document.querySelectorAll('.sound');
 const recordbtn =document.querySelector('.record-btn');
 const stopbtn=document.querySelector('.stop-btn');
 const playbtn =document.querySelector('.play-btn');
+const tracksbtn =document.querySelectorAll('.track-btn')
 let recordingTime;
 let songContainer;
-
+let trackContainer;
 const keyMap =[...sounds].reduce((map,key)=>{
 map[key.dataset.note]=key
 return map
 },{})
 
 recordbtn.addEventListener('click',recording);
-stopbtn.addEventListener('click',stopSong);
+stopbtn.addEventListener('click',saveSongs);
 playbtn.addEventListener('click',playSong);
 function recording(){
  recordbtn.classList.toggle('active');
+  
   if(isRecordng()){
     startRecording()
   }else 
@@ -25,25 +27,29 @@ function isRecordng(){
   return recordbtn !=null&& recordbtn.classList.contains('active');
 }
 function startRecording(){
-  console.log("is recording");
   recordingTime=Date.now()
+  trackContainer=[]
   songContainer =[]
   playbtn.classList.remove('show');
   stopbtn.classList.remove('show');
 }
 function stopRecording(){
-  playSong()
+  // playSong()
   playbtn.classList.add('show');
   stopbtn.classList.add('show');
 }
 function playSong(){
   if(songContainer.length===0) return
+  playbtn.classList.toggle('active');
   songContainer.forEach(note=>{
     setTimeout(()=>{
       playNote(keyMap[note.key])
     },note.startTime)
   })
+  //todo:active cllas
+ 
 }
+
 /////////////////////seting keys and sound///////////////
 const keys={
   sound:["q","w","e","r","t","y","u","i","o",]
@@ -75,8 +81,18 @@ function recordNote(note){
     key:note,
     startTime:Date.now()- recordingTime,
   })
+}//////////////////////////////////
+tracksbtn.forEach(track => {
+  track.addEventListener('click',()=>activeTrack(track))
+});
+function activeTrack(track){
+  track.classList.toggle('activeGreen');
+  if(stopbtn!=null)saveSongs(track.dataset.note)
+  
 }
-
-function stopSong(){
-
+function saveSongs(track){
+  trackContainer.push({
+    trak:track,
+    songs:songContainer});
+  console.log(trackContainer);
 }
