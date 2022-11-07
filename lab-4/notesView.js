@@ -11,7 +11,7 @@ export default class NotesView{
             <div class="notes__list"></div>
         </div>
         <div class="notes__preview">
-            <input class="notes__title" type="text" placeholder="New note">
+            <input class="notes__title" type="text" placeholder="New note..">
             <textarea class="notes__body">Your note..</textarea>
         </div>
         `;
@@ -35,7 +35,7 @@ export default class NotesView{
         // console.log(this._createListItemHtml(300,"hey","Yeah mate",new Date()));
     }
 
-    _createListItemHtml(id,title,body,updated){
+    _createListItemHTML(id,title,body,updated){
         const MaxBodyLength=60;
 
         return `
@@ -53,19 +53,19 @@ export default class NotesView{
     }
 
     updateNoteList(notes){
-        const notesListContainer= this.root.querySelector('.notes__list');
+        const notesListContainer= this.root.querySelector(".notes__list");
 
         //empty list
         notesListContainer.innerHTML= "";
         for(const note of notes){
-            const html = this._createListItemHtml(note.id,note.title,note.body, new Date(note.updated));
+            const html = this._createListItemHTML(note.id, note.title, note.body, new Date(note.updated));
 
-            notesListContainer.insertAdjacentHTML('beforeend',html);
+            notesListContainer.insertAdjacentHTML("beforeend", html);
         }
         notesListContainer.querySelectorAll('.notes__list-item').forEach(noteListItem=>{
             noteListItem.addEventListener('click',()=>{
                 this.onNoteSelect(noteListItem.dataset.noteId);
-            })
+            });
 
             noteListItem.addEventListener('dblclick',()=>{
                 const doDelete = confirm("Are you sure you wont delete this note?");
@@ -73,13 +73,13 @@ export default class NotesView{
                 if(doDelete){
                     this.onNoteDelete(noteListItem.dataset.noteId);
                 }
-            })
-        })
+            });
+        });
 
     }
     updateActiveNote(note){
-        this.root .querySelector('.notes__title').value=note.title;
-        this.root .querySelector('.notes__body').value=note.body;
+        this.root.querySelector(".notes__title").value = note.title;
+        this.root.querySelector(".notes__body").value = note.body;
 
         this.root.querySelectorAll(".notes__list-item").forEach(noteListItem=>{
             noteListItem.classList.remove("notes__list-item--selected");
