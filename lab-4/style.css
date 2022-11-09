@@ -37,6 +37,36 @@ body{
 }
 .notes__list-item{
     cursor: pointer;
+    border-radius: 7px;
+
+}
+.btnscolor{
+    text-align: center;
+}
+.btncolor{
+    display: inline-block;
+    border: none;
+    margin-left: 5px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+
+}
+.whitebtn{
+    background: rgba(255, 255, 255, 0.5);
+}
+.bluebtn{
+    background: rgba(34, 137, 240, 0.5);
+}
+.redbtn{
+    background: rgba(251, 0, 0, 0.5);
+}
+.greenbtn{
+    background: rgba(71, 251, 0, 0.5);
+}
+.orangebtn{
+    background: rgba(251, 146, 0, 0.5);
 }
 .notes__list-item--selected{
     background: #eeeeee;

@@ -13,9 +13,16 @@ export default class NotesView{
         <div class="notes__preview">
             <input class="notes__title" type="text" placeholder="New note..">
             <textarea class="notes__body">Your note..</textarea>
+            <div class="btnscolor">
+                <button class="btncolor whitebttn" type="button"></button>
+                <button class="btncolor redbtn" type="button"></button>
+                <button class="btncolor bluebtn" type="button"></button>
+                <button class="btncolor greenbtn" type="button"></button>
+                <button class="btncolor orangebtn" type="button"></button>
+            </div>
         </div>
         `;
-
+        const btnscolor =this.root.querySelectorAll(".btncolor");
         const btnAddNote= this.root.querySelector(".notes__add");
         const inpTitle= this.root.querySelector(".notes__title");
         const inpBody= this.root.querySelector(".notes__body");
@@ -44,6 +51,7 @@ export default class NotesView{
             <div class="notes__small-body">
                 ${body.substring(0,MaxBodyLength)}
                 ${body.length >MaxBodyLength ? "...":""}
+                
             </div>
             <div class="notes__small-updated">
                 ${updated.toLocaleString(undefined,{dateStyle:"full",timeStyle: "short"})}
@@ -66,12 +74,15 @@ export default class NotesView{
             noteListItem.addEventListener('click',()=>{
                 this.onNoteSelect(noteListItem.dataset.noteId);
             });
-
+            // btnscolor.addEventListener('click',()=>{
+            //     noteListItem.classList.add
+            // })
             noteListItem.addEventListener('dblclick',()=>{
                 const doDelete = confirm("Are you sure you wont delete this note?");
 
                 if(doDelete){
                     this.onNoteDelete(noteListItem.dataset.noteId);
+            
                 }
             });
         });
@@ -80,9 +91,10 @@ export default class NotesView{
     updateActiveNote(note){
         this.root.querySelector(".notes__title").value = note.title;
         this.root.querySelector(".notes__body").value = note.body;
-
+        
         this.root.querySelectorAll(".notes__list-item").forEach(noteListItem=>{
             noteListItem.classList.remove("notes__list-item--selected");
+            
         });
 
         this.root.querySelector(`.notes__list-item[data-note-id="${note.id}"]`).classList.add("notes__list-item--selected");
