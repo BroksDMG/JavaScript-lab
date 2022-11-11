@@ -1,24 +1,26 @@
-const func =[saveCToSessionStorage,discoverPowerBallNumber];
-interval(func);
-function interval(func) {
-    func.forEach(f => {
+import Logger from "./logger.js";
+import EventBus from "./event-bus.js";
+
+
+
+EventBus.subscribe(saveCToSessionStorage);
+EventBus.subscribe(discoverPowerBallNumber);
+
+interval();
+function interval() {
         let timer = 1
         setInterval(
           () => {
             // mamy coupling - interval ma na sztywno zaszyte w sobie C i D (..i logger)
-            f(timer);
+            EventBus.emit(timer);
             timer++
           }
           , 2000) 
-    });
+    
   
 }
 
-class Logger {
-  static log(data) {
-    console.log(data)
-  }
-}
+///logger wyodrębniony
 
 function saveCToSessionStorage(data) {
   console.log('[reader C]', data)
