@@ -4,8 +4,10 @@ const main = document.querySelector('.main')
 const ball = document.querySelector('.ball');
 window.addEventListener('deviceorientation', onDeviceMove)
 let velocity= 1;
-let interval=0;
-let both =0;
+let intervalLeftRight;
+let intervalUpDown;
+let both1 =0;
+let both2 =0;
 function moveLeft(){
     let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
     // let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"))
@@ -30,69 +32,67 @@ function moveUp(){
         ball.style.top=ballTop-velocity+"px"
         // ball.style.left=ballLeft+velocity+"px"
 }
-function moveUpLeft(){
-    let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
-    let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"))
-        ball.style.top=ballTop-velocity+"px"
-        ball.style.left=ballLeft-velocity+"px"
-}
-
-const arows =document.addEventListener('keydown', event=>{
-    
-    if(event.key==="ArrowLeft"&&event.key==="ArrowUp"){
-        interval =setInterval(moveUpLeft,1)
-    }
-    if(both===0){
-    both++;
-    if(event.key==="ArrowLeft"){
-        interval =setInterval(moveLeft,1)
-    }
-    if(event.key==="ArrowRight"){
-        interval=setInterval(moveRight,1)
-    }
-    if(event.key==="ArrowUp"){
-        interval =requestAnimationFrame(moveUp)*4
-    }
-    if(event.key==="ArrowDown"){
-        interval=setInterval(moveDown,1)
-    }
-    
-    
-    // if(event.key==="ArrowRight"){
-    //     interval=setInterval(moveRightUp,1)
-    // }
-    // if(event.key==="ArrowUp"){
-    //     interval =setInterval(moveLeftDown,1)
-    // }
-    // if(event.key==="ArrowDown"){
-    //     interval=setInterval(moveRightDonw,1)
-    // }
-    }
-})
-document.addEventListener('keyup',event=>{
-    clearInterval(interval);
-    both=0;
-})
+// function moveUpLeft(){
+//     let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
+//     let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"))
+//         ball.style.top=ballTop-velocity+"px"
+//         ball.style.left=ballLeft-velocity+"px"
+// }
+// 
+let range =10
 function onDeviceMove(event) {
-    if(both===0){
-        
-    if(event.gamma>0){
-        interval=setInterval(moveUp,1)
-    }
-    if(event.gamma<0){
-        interval=setInterval(moveDown,1)
-    }
-    if(event.beta>0){
-        interval=setInterval(moveRight,1)
-    }
-    if(event.beta<0){
-        interval=setInterval(moveLeft,1)
-    }}
+    
+    if(event.gamma>range){
+        both1++;
+        intervalUpDown=setInterval(moveUp,1)
 
-    console.log(Math.floor(event.alpha));
-    console.log(Math.floor(event.gamma));
-    console.log(Math.floor(event.beta));
+    }else if(event.gamma<(-range)){
+        
+        intervalUpDown=setInterval(moveDown,1)
+    }else if(event.gamma>(-range)||event.gamma<range){
+        clearInterval(intervalUpDown);
+        console.log(both1);
+        cancelAnimationFrame(onDeviceMove)
+    }
+    if(event.beta>range){
+        intervalLeftRight=setInterval(moveRight,1)
+    }else if(event.beta<(-range)){
+       intervalLeftRight= setInterval(moveLeft,1)
+    }else if(event.beta>(-range)||event.beta<range){
+        console.log("pas2");
+        clearInterval(intervalLeftRight)
+    }
 }
+requestAnimationFrame(onDeviceMove)
+
+// function onDeviceMoveUp(event) {
+    
+//     if(event.gamma>range){
+//         intervalUpDown=setInterval(moveUp,1)
+//         console.log("up");
+//     }else if(event.gamma<(-range)){
+//         intervalUpDown=setInterval(moveDown,1)
+//         console.log("dow");
+//     }else if(event.gamma>(-range)||event.gamma<range){
+//         console.log("pas");
+//         both=0;
+//         clearInterval(intervalUpDown);
+//     }
+// }
+// function onDeviceMoveLeft(event) {
+//     if(event.beta>range){
+//         intervalLeftRight=setInterval(moveRight,1)
+//     }else if(event.beta<(-range)){
+//        intervalLeftRight= setInterval(moveLeft,1)
+//     }else if(event.beta>(-range)||event.beta<range){
+//         console.log("pas2");
+//         clearInterval(intervalLeftRight)
+//     }
+// }
+// requestAnimationFrame(onDeviceMoveLeft)
+
+
+
 // function onDeviceMove(event) {
 //     let leftright= event.beta/100
 //     let right= leftright?true:false
@@ -154,3 +154,26 @@ function animate() {
 }
 
 requestAnimationFrame(animate)
+
+
+    // const arows =document.addEventListener('keydown', event=>{
+    //     if(both===0){
+    //     both++;
+    //     console.log(both);
+    //     if(event.key==="ArrowLeft"){
+    //         interval =setInterval(moveLeft,1)
+    //     }
+    //     if(event.key==="ArrowRight"){
+    //         interval=setInterval(moveRight,1)
+    //     }
+    //     if(event.key==="ArrowUp"){
+    //         interval =setInterval(moveUp,1)
+    //     }
+    //     if(event.key==="ArrowDown"){
+    //         interval=setInterval(moveDown,1)
+    //     }}
+    // })
+    // document.addEventListener('keyup',event=>{
+    //     clearInterval(interval);
+    //     both=0;
+    // })
