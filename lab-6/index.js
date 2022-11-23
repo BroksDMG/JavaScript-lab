@@ -1,5 +1,4 @@
 'use strict';
-
 const main = document.querySelector('.main')
 const ball = document.querySelector('.ball');
 window.addEventListener('deviceorientation', onDeviceMove)
@@ -8,62 +7,85 @@ let intervalLeftRight;
 let intervalUpDown;
 let both1 =0;
 let both2 =0;
-function moveLeft(){
+let leftright =false
+let right = leftright?true:false
+let updown =false
+let up = leftright?true:false
+function moveLeft(){ 
     let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
-    // let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"))
-        // ball.style.top=ballTop-velocity+"px"
-        ball.style.left=ballLeft-velocity+"px"
+    let boardBounds=main.getBoundingClientRect();
+    let ballBounds=ball.getBoundingClientRect();
+    if(!(ballBounds.left<=boardBounds.left))ball.style.left=ballLeft-velocity+"px"
 }
 function moveRight(){
     let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
-    // let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"))
-        // ball.style.top=ballTop-velocity+"px"
-        ball.style.left=ballLeft+velocity+"px"
+    let boardBounds=main.getBoundingClientRect();
+    let ballBounds=ball.getBoundingClientRect();
+    if(!(ballBounds.right>=boardBounds.right))ball.style.left=ballLeft+velocity+"px"
 }
 function moveDown(){
-    // let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
     let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"))
-        ball.style.top=ballTop+velocity+"px"
-        // ball.style.left=ballLeft-velocity+"px"
+    let boardBounds=main.getBoundingClientRect();
+    let ballBounds=ball.getBoundingClientRect();
+    if(!(ballBounds.bottom>=boardBounds.bottom)) ball.style.top=ballTop+velocity+"px"
 }
 function moveUp(){
-    // let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
     let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"))
-        ball.style.top=ballTop-velocity+"px"
-        // ball.style.left=ballLeft+velocity+"px"
+    let boardBounds=main.getBoundingClientRect();
+    let ballBounds=ball.getBoundingClientRect();
+    if(!(ballBounds.top<=boardBounds.top)) ball.style.top=ballTop-velocity+"px"
 }
-// function moveUpLeft(){
-//     let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
-//     let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"))
-//         ball.style.top=ballTop-velocity+"px"
-//         ball.style.left=ballLeft-velocity+"px"
-// }
-// 
 let range =10
 function onDeviceMove(event) {
-    
+   const animation =setInterval(()=>{
     if(event.gamma>range){
         both1++;
-        intervalUpDown=setInterval(moveUp,1)
-
+        moveUp()
     }else if(event.gamma<(-range)){
-        
-        intervalUpDown=setInterval(moveDown,1)
+        moveDown()
     }else if(event.gamma>(-range)||event.gamma<range){
-        clearInterval(intervalUpDown);
+        clearInterval(animation);
         console.log(both1);
-        cancelAnimationFrame(onDeviceMove)
     }
     if(event.beta>range){
-        intervalLeftRight=setInterval(moveRight,1)
-    }else if(event.beta<(-range)){
-       intervalLeftRight= setInterval(moveLeft,1)
-    }else if(event.beta>(-range)||event.beta<range){
-        console.log("pas2");
-        clearInterval(intervalLeftRight)
+        moveRight()
     }
+    if(event.beta<(-range)){
+       moveLeft()
+    }
+    if(event.beta>(-range)||event.beta<range){
+        console.log("pas2");
+        clearInterval(animation)
+    }
+   },1) 
+//    cancelAnimationFrame(animation)
+
+    // if(event.gamma>range){
+    //     both1++;
+    //     intervalUpDown=setInterval(moveUp,1)
+
+    // }else if(event.gamma<(-range)){
+        
+    //     intervalUpDown=setInterval(moveDown,1)
+    // }else if(event.gamma>(-range)||event.gamma<range){
+    //     clearInterval(intervalUpDown);
+    //     console.log(both1);
+    //     cancelAnimationFrame(onDeviceMove)
+    // }
+    // if(event.beta>range){
+    //     intervalLeftRight=setInterval(moveRight,1)
+    // }else if(event.beta<(-range)){
+    //    intervalLeftRight= setInterval(moveLeft,1)
+    // }else if(event.beta>(-range)||event.beta<range){
+    //     console.log("pas2");
+    //     clearInterval(intervalLeftRight)
+    // }
 }
 requestAnimationFrame(onDeviceMove)
+let ballMove=setInterval(()=>{
+            
+            
+        },10)
 
 // function onDeviceMoveUp(event) {
     
