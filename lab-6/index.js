@@ -1,21 +1,30 @@
 'use strict';
 const main = document.querySelector('.main')
 const ball = document.querySelector('.ball');
-window.addEventListener('deviceorientation', onDeviceMove)
+window.addEventListener('deviceorientation', changePosition)
 let velocity= 1;
 let intervalLeftRight;
 let intervalUpDown;
 let both1 =0;
 let both2 =0;
+let rotationRight=0;
+let rotationLeft=0;
 let leftright =false
 let right = leftright?true:false
 let updown =false
 let up = leftright?true:false
+let speedX=0, speedY=0;
+let posX=20,posY=20
 function moveLeft(){ 
     let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
     let boardBounds=main.getBoundingClientRect();
     let ballBounds=ball.getBoundingClientRect();
-    if(!(ballBounds.left<=boardBounds.left))ball.style.left=ballLeft-velocity+"px"
+    if(!(ballBounds.left<=boardBounds.left))
+    {   
+        posY+=speedY
+        ball.style.left=posX+'px';
+    }
+    //ball.style.left=ballLeft-velocity+"px"
 }
 function moveRight(){
     let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
@@ -33,85 +42,73 @@ function moveUp(){
     let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"))
     let boardBounds=main.getBoundingClientRect();
     let ballBounds=ball.getBoundingClientRect();
-    if(!(ballBounds.top<=boardBounds.top)) ball.style.top=ballTop-velocity+"px"
-}
-let range =10
-function onDeviceMove(event) {
-   const animation =setInterval(()=>{
-    if(event.gamma>range){
-        both1++;
-        moveUp()
-    }else if(event.gamma<(-range)){
-        moveDown()
-    }else if(event.gamma>(-range)||event.gamma<range){
-        clearInterval(animation);
-        console.log(both1);
+    if(!(ballBounds.top<=boardBounds.top)) {
+        posX+=speedX;
+        ball.style.top=posX+'px';
     }
-    if(event.beta>range){
-        moveRight()
-    }
-    if(event.beta<(-range)){
-       moveLeft()
-    }
-    if(event.beta>(-range)||event.beta<range){
-        console.log("pas2");
-        clearInterval(animation)
-    }
-   },1) 
-//    cancelAnimationFrame(animation)
-
-    // if(event.gamma>range){
-    //     both1++;
-    //     intervalUpDown=setInterval(moveUp,1)
-
-    // }else if(event.gamma<(-range)){
-        
-    //     intervalUpDown=setInterval(moveDown,1)
-    // }else if(event.gamma>(-range)||event.gamma<range){
-    //     clearInterval(intervalUpDown);
-    //     console.log(both1);
-    //     cancelAnimationFrame(onDeviceMove)
-    // }
-    // if(event.beta>range){
-    //     intervalLeftRight=setInterval(moveRight,1)
-    // }else if(event.beta<(-range)){
-    //    intervalLeftRight= setInterval(moveLeft,1)
-    // }else if(event.beta>(-range)||event.beta<range){
-    //     console.log("pas2");
-    //     clearInterval(intervalLeftRight)
-    // }
-}
-requestAnimationFrame(onDeviceMove)
-let ballMove=setInterval(()=>{
-            
-            
-        },10)
-
-// function onDeviceMoveUp(event) {
     
-//     if(event.gamma>range){
-//         intervalUpDown=setInterval(moveUp,1)
-//         console.log("up");
-//     }else if(event.gamma<(-range)){
-//         intervalUpDown=setInterval(moveDown,1)
-//         console.log("dow");
-//     }else if(event.gamma>(-range)||event.gamma<range){
-//         console.log("pas");
-//         both=0;
-//         clearInterval(intervalUpDown);
-//     }
-// }
-// function onDeviceMoveLeft(event) {
+    // ball.style.top=ballTop-velocity+"px"
+    
+
+}
+let range =5
+function changePosition(e){
+    speedX=e.gamma30
+    speedY=e.beta/30
+}
+function onDeviceMove() {
+    moveLeft()
+    moveDown()
+    // if(posX+speedX<window.innerWidth-50&&posX+posX>0){
+    //     posX+=speedX;
+    //     ball.style.left=posX+'px';
+    //     // both1=1 
+    // }
+    // if(posX+speedX<window.innerHeight-50&&posX+posX>0){
+    //     posY+=speedY;
+    //     ball.style.top=posX+'px';
+
+    // }
+//     let step=2;
+//     let x1=0;
+//     let x2=0;
+//     let y1=0;
+//     let y2=0;
+//     setInterval(()=> step=-step,300)
+//     const animation =()=>{  
+    // if(event.gamma>range){
+    //     posX+=speedX;
+    //     ball.style.left=posX+'px';
+    //     // both1=1 
+    // }
+    // if(event.gamma<(-range)){
+    //     posX+=speedX;
+    //     ball.style.left=posX+'px';
+
+    // }
+//     if(event.gamma>(-range)&&event.gamma<range){
+//         x1=1;
+//         cancelAnimationFrame(animation);
+//         console.log(x1);
+//     }}
+//     window.requestAnimationFrame(animation)
+//  const animation2 =()=>{
+
 //     if(event.beta>range){
-//         intervalLeftRight=setInterval(moveRight,1)
-//     }else if(event.beta<(-range)){
-//        intervalLeftRight= setInterval(moveLeft,1)
-//     }else if(event.beta>(-range)||event.beta<range){
-//         console.log("pas2");
-//         clearInterval(intervalLeftRight)
+//         moveRight()
 //     }
-// }
-// requestAnimationFrame(onDeviceMoveLeft)
+//     if(event.beta<(-range)){
+//        moveLeft()
+//     }
+//     if(event.beta>(-range)&&event.beta<range){
+//        cancelAnimationFrame(animation);
+//     }}
+//     window.requestAnimationFrame(animation2)
+ 
+window.requestAnimationFrame(moveDown)
+}
+onDeviceMove();
+
 
 
 
