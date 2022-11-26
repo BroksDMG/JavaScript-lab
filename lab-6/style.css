@@ -13,7 +13,15 @@ body{
     transform: translate(-50%,-50%);
     width: 50vh;
     height: 90vh;
-    
+    border: 2px solid white;
+}
+.board{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50vh;
+    height: 90vh;
+    transform: translate(-50%,-50%);
     border: 2px solid white;
 }
 .ball{
@@ -23,15 +31,6 @@ body{
     background: white;
     left: 50%;
     top: 50%;
+    border: 3px;
     border-radius: 50%;
-    transition: 0.3s linear;
-}
-.xtxt{
-    color: white;
-}
-.ytxt{
-    color: white;
-}
-.ztxt{
-    color: white;
 }

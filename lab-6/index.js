@@ -1,74 +1,73 @@
 'use strict';
 const main = document.querySelector('.main')
 const ball = document.querySelector('.ball');
-window.addEventListener('deviceorientation', changePosition)
-let velocity= 1;
-let intervalLeftRight;
-let intervalUpDown;
-let both1 =0;
-let both2 =0;
-let rotationRight=0;
-let rotationLeft=0;
-let leftright =false
-let right = leftright?true:false
-let updown =false
-let up = leftright?true:false
+const board =document.querySelector('.board')
+const ctx = board.getContext=
+
+
+window.addEventListener('deviceorientation', changePosition);
+const circle =document.getElementById('circle');
 let speedX=0, speedY=0;
-let posX=20,posY=20
-function moveLeft(){ 
-    let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
-    let boardBounds=main.getBoundingClientRect();
-    let ballBounds=ball.getBoundingClientRect();
-    if(!(ballBounds.left<=boardBounds.left))
-    {   
-        posY+=speedY
-        ball.style.left=posX+'px';
-    }
-    //ball.style.left=ballLeft-velocity+"px"
-}
-function moveRight(){
-    let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
-    let boardBounds=main.getBoundingClientRect();
-    let ballBounds=ball.getBoundingClientRect();
-    if(!(ballBounds.right>=boardBounds.right))ball.style.left=ballLeft+velocity+"px"
-}
-function moveDown(){
-    let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"))
-    let boardBounds=main.getBoundingClientRect();
-    let ballBounds=ball.getBoundingClientRect();
-    if(!(ballBounds.bottom>=boardBounds.bottom)) ball.style.top=ballTop+velocity+"px"
-}
-function moveUp(){
-    let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"))
-    let boardBounds=main.getBoundingClientRect();
-    let ballBounds=ball.getBoundingClientRect();
-    if(!(ballBounds.top<=boardBounds.top)) {
-        posX+=speedX;
-        ball.style.top=posX+'px';
-    }
+let posX=500,posY=300;
+let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"));
+
+// function moveLeft(){ 
+//     let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
+//     let boardBounds=main.getBoundingClientRect();
+//     let ballBounds=ball.getBoundingClientRect();
+//     // if(!(ballBounds.left<=boardBounds.left))
+//     // {   
+//     //     posY+=speedY
+//     //     ball.style.left=posX+'px';
+//     // }
+//     //ball.style.left=ballLeft-velocity+"px"
+// }
+// function moveRight(){
+//     let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
+//     let boardBounds=main.getBoundingClientRect();
+//     let ballBounds=ball.getBoundingClientRect();
+//     if(!(ballBounds.right>=boardBounds.right))ball.style.left=ballLeft+velocity+"px"
+// }
+// function moveDown(){
+//     let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"))
+//     let boardBounds=main.getBoundingClientRect();
+//     let ballBounds=ball.getBoundingClientRect();
+//     if(!(ballBounds.bottom>=boardBounds.bottom)) ball.style.top=ballTop+velocity+"px"
+// }
+// function moveUp(){
+//     let ballTop =parseInt(window.getComputedStyle(ball).getPropertyValue("top"))
+//     let boardBounds=main.getBoundingClientRect();
+//     let ballBounds=ball.getBoundingClientRect();
+//     // if(!(ballBounds.top<=boardBounds.top)) {
+//     //     posX+=speedX;
+//     //     ball.style.top=posX+'px';
+//     // }
     
-    // ball.style.top=ballTop-velocity+"px"
+//     // ball.style.top=ballTop-velocity+"px"
     
 
-}
+// }
 let range =5
 function changePosition(e){
-    speedX=e.gamma30
-    speedY=e.beta/30
+    speedX=e.gamma/5
+    speedY=e.beta/5
 }
 function onDeviceMove() {
-    moveLeft()
-    moveDown()
-    // if(posX+speedX<window.innerWidth-50&&posX+posX>0){
-    //     posX+=speedX;
-    //     ball.style.left=posX+'px';
-    //     // both1=1 
-    // }
-    // if(posX+speedX<window.innerHeight-50&&posX+posX>0){
-    //     posY+=speedY;
-    //     ball.style.top=posX+'px';
+    
+    let ballLeft=parseInt(window.getComputedStyle(ball).getPropertyValue("left"))
+    let boardLeft=parseInt(window.getComputedStyle(main).getPropertyValue("top"))
 
-    // }
+    let boardBounds=main.getBoundingClientRect();
+    let ballBounds=ball.getBoundingClientRect();
+
+    if(ballBounds.top+speedX>boardBounds.top&&ballBounds.bottom+speedX<boardBounds.bottom){
+        ballTop+=speedX;
+        ball.style.top=ballTop+'px';
+    }
+    if(ballBounds.left+speedY>boardBounds.left&&ballBounds.right+speedY<boardBounds.right){
+        posY+=speedY;
+        ball.style.left=posY+'px';
+    }
 //     let step=2;
 //     let x1=0;
 //     let x2=0;
@@ -104,8 +103,13 @@ function onDeviceMove() {
 //        cancelAnimationFrame(animation);
 //     }}
 //     window.requestAnimationFrame(animation2)
+// console.log(speedX,ballTop);
  
-window.requestAnimationFrame(moveDown)
+window.requestAnimationFrame(onDeviceMove)
+// console.log(boardBounds);
+// console.log(posX+speedX);
+// console.log(ballBounds.top);
+
 }
 onDeviceMove();
 
