@@ -46,3 +46,6 @@ body{
 .active_start{
     background-color: green;
 }
+.hidden_hole{
+    display: none;
+}
