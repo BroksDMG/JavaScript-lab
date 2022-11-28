@@ -5,6 +5,7 @@ const ball = document.querySelector('.ball');
 const startButton =document.querySelector('.start_button');
 const holes=[]
 let speedX=0, speedY=0;
+let some=[];
 let result
 let counter=0;
 let holesarr=[];
@@ -25,15 +26,13 @@ function random(min,max){
     const num =Math.floor(Math.random()*(max-min+1))+min;
     return num;
 }
-
 class Hole{
-    constructor(id,x,y,velX,velY,size,color){
+    constructor(id,x,y,velX,velY,color,){
         this.id=id
         this.x=x;
         this.y=y;
         this.velX=velX;
         this.velY=velY;
-        this.size=size;
         this.color=color;
     }
     createhole(){
@@ -44,6 +43,12 @@ class Hole{
     hole.style.top=this.x+'px';
     hole.style.left=this.y+'px';
     hole.style.background=this.color;
+        for(const hol of some){                     ///creating some black holes
+            if(hol===this.id){
+                console.log(this.id,"równe");
+                hole.classList.add('black_hole')
+            }
+        }
     }
     movehole(){
         boardBounds=main.getBoundingClientRect(); 
@@ -61,26 +66,13 @@ class Hole{
         curhole.style.left=this.y+'px';
     }
 }
-while(holes.length<20){
-    counter++;
-    holesarr.push(counter)
-    score.push(counter)
-    let hole=new Hole(
-        counter,
-        random(30,700),
-        random(30,400),
-        random(0,1),
-        random(0,1),
-        30,
-        `rgb(${random(0,255)},${random(0,255)},${random(0,255)},${random(0,255)})`)
-    hole.createhole()
-    holes.push(hole);
-    }
 function Holes(){
     for(let i=0; i<holes.length;i++){
         holes[i].movehole();
+        
     }
     for(let i=0; i<holesarr.length;i++){
+        console.log(some);
         let current =holesarr[i];
         let currHole= document.getElementById("hole"+current);
         let currentHoleBound =currHole.getBoundingClientRect();
@@ -92,7 +84,15 @@ function Holes(){
             currHole.classList.add('hidden_hole');
             score.pop();
             console.log(score);
+            if(currHole.classList.contains('black_hole')){
+                console.log("blackhole");
+                ballleft=400
+                ballTop=200
+                ball.style.top=ballTop+'px';
+                ball.style.left=ballleft+'px';
+            }
         }
+        
     }
 }
 function onDeviceMove() {       //moving ball
@@ -116,5 +116,21 @@ document.addEventListener('click',function(){
     gameStart=true
     onDeviceMove();
     }
+    while(holes.length<20){
+        counter++;
+        if(counter<5)some.push(random(0,20))
+        holesarr.push(counter)
+        score.push(counter)
+        let hole=new Hole(
+            counter,                //id
+            random(30,700),         //position x
+            random(30,400),         //position y
+            random(0,1),            //speed x
+            random(0,1),            //speed y
+            `rgb(${random(0,255)},${random(0,255)},${random(0,255)})`, //color
+            )
+        hole.createhole()
+        holes.push(hole);
+        }
 })
 
