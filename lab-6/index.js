@@ -5,11 +5,11 @@ const startButton =document.querySelector('.start_button');
 window.addEventListener('deviceorientation', changePosition);
 let speedX=0, speedY=0;
 let result
-let leftright=Math.floor(Math.random()*2);
-let updonw= Math.floor(Math.random()*2);
+let velocity=1;
+let leftright=random(0,2);
+let updonw= random(0,2);
 let right=leftright?true:false
 let up =updonw?true:false
-let velocity=3;
 let counter=0;
 let holesarr=[];
 let score=[]
@@ -23,6 +23,11 @@ function changePosition(e){  // ball speed
     speedX=e.gamma/5
     speedY=e.beta/5
 }
+function random(min,max){
+    const num =Math.floor(Math.random()*(max-min+1))+min;
+    return num;
+}
+
 function onDeviceMove() {       //moving ball
     boardBounds=main.getBoundingClientRect();       // borders of board and ball
     ballBounds=ball.getBoundingClientRect();
@@ -35,75 +40,95 @@ function onDeviceMove() {       //moving ball
         ball.style.left=ballleft+'px';
     }
     createHole();
-    movehole();
+    // movehole();
 window.requestAnimationFrame(onDeviceMove)
 }
 
 function movehole(){
-    
-    if(counter<=20){
+
+    for(let i=0; i<holesarr.length;i++){
+       
+        let current =holesarr[i]
         boardBounds=main.getBoundingClientRect(); 
-    let curhole= document.getElementById(`hole${counter}`)
+    // let curhole= document.getElementById(`hole1`)
+    let curhole= document.getElementById("hole"+current)
     let curholeBound=curhole.getBoundingClientRect();
     let holeTop=parseInt(window.getComputedStyle(curhole).getPropertyValue("top"))
     let holeLeft=parseInt(window.getComputedStyle(curhole).getPropertyValue("left"))
-    
-    if(right&&up){
-        console.log(curhole);  
+    if(right&&up){ 
         curhole.style.top=holeTop-velocity+"px"
         curhole.style.left=holeLeft+velocity+"px"
     }
-    if(!right&&up){
-        console.log(curhole);  
+    if(!right&&up){  
         curhole.style.top=holeTop-velocity+"px"
         curhole.style.left=holeLeft-velocity+"px"
     }
     if(right&&!up){
-        console.log(curhole);
         curhole.style.top=holeTop+velocity+"px"
         curhole.style.left=holeLeft+velocity+"px"
     }
     if(!right&&!up){
-        console.log(curhole);
         curhole.style.top=holeTop+velocity+"px"
         curhole.style.left=holeLeft-velocity+"px"
     }
     if(curholeBound.top<=boardBounds.top){
-        leftright= Math.floor(Math.random()*2)
+        leftright= random(0,2)
         right= leftright?true:false
         up=false;
     }
     if(curholeBound.bottom>=boardBounds.bottom){
-        leftright= Math.floor(Math.random()*2)
+        leftright= random(0,2)
         right= leftright?true:false
         up=true;
     }
     if(curholeBound.right>=boardBounds.right){
         right=false
-        updonw= Math.floor(Math.random()*2)
+        updonw= random(0,2)
         up= updonw?true:false
     }
     if(curholeBound.left<=boardBounds.left){
         right=true
-        updonw= Math.floor(Math.random()*2)
+        updonw= random(0,2)
         up= updonw?true:false
     }  
     
 }
 }
-function createHole(){
-    counter++;
-    if(counter<=20){
+class Hole{
+    constructor(id,x,y,velX,velY){
+        this.id=id
+        this.x=x;
+        this.y=y;
+        this.velX=velX;
+        this.velY=velY;
+        
+    }
+    createhole(){
     let hole = document.createElement("canvas");   
     hole.setAttribute('class','hole');
-    hole.setAttribute('id','hole'+counter);
+    hole.setAttribute('id','hole'+this.id);
     main.appendChild(hole);
-    let randomTop =Math.floor(Math.random()*1000);
-    let randomLeft =Math.floor(Math.random()*500);
-    hole.style.top=randomTop+'px';
-    hole.style.left=randomLeft+'px';
+    hole.style.top=this.x+'px';
+    hole.style.left=this.y+'px';
+    }
+}
+function createHole(){
+    
+    counter++;
+    if(counter<=20){
+    // let hole = document.createElement("canvas");   
+    // hole.setAttribute('class','hole');
+    // hole.setAttribute('id','hole'+counter);
+    // main.appendChild(hole);
+    let randomTop =random(30,700);
+    let randomLeft =random(30,400);
+    // hole.style.top=randomTop+'px';
+    // hole.style.left=randomLeft+'px';
     holesarr.push(counter)
     score.push(counter)
+    let eloh=new Hole(counter,randomTop,randomLeft,1,1)
+    eloh.createhole();
+    console.log(eloh);
 }
 for(let i=0; i<holesarr.length;i++){
     let current =holesarr[i];
@@ -117,6 +142,8 @@ for(let i=0; i<holesarr.length;i++){
         currHole.classList.add('hidden_hole');
         score.pop();
         console.log(score); 
+    console.log(eloh);
+
     }
 
 }
@@ -132,11 +159,7 @@ document.addEventListener('click',function(){
 })
 
 function holeMove(event) {
-    let leftright= event.beta/100
-    let right= leftright?true:false
-    let updonw= event.gamma
-    let up= updonw?true:false
-    let ballMove=setInterval(()=>{
+    setInterval(()=>{
         let ballBounds=ball.getBoundingClientRect();
         let boardBounds=main.getBoundingClientRect();
         let ballBoundsLeft=parseInt(ballBounds.left);
