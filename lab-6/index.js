@@ -5,10 +5,8 @@ const ball = document.querySelector(".ball");
 const body = document.querySelector("body");
 const startButton = document.querySelector(".start_button");
 const holes = [];
-let speedX = 0,
-  speedY = 0;
-let some = [];
-let result;
+let speedX = 0,speedY = 0;
+let someBlackHoles = [];
 let counter = 0;
 let holesarr = [];
 let score = [];
@@ -19,8 +17,7 @@ let curholeBound;
 let ballTop = parseInt(window.getComputedStyle(ball).getPropertyValue("top")); //ball position from top and left
 let ballleft = parseInt(window.getComputedStyle(ball).getPropertyValue("left"));
 let gameStart = false;
-function changePosition(e) {
-  // ball speed
+function changePosition(e) {        // ball speed
   speedX = e.gamma / 30;
   speedY = -e.beta / 30;
 }
@@ -43,10 +40,9 @@ class Hole {
     main.appendChild(hole);
     hole.style.top = this.x + "px";
     hole.style.left = this.y + "px";
-    console.log(this.id, "x:", this.x, "y:", this.y);
-
+    hole.style.boxShadow= `0 0 10px 5px ${this.color}`
     hole.style.background = this.color;
-    for (const hol of some) {
+    for (const hol of someBlackHoles) {
       if (hol === this.id) {
         hole.classList.add("black_hole"); ///creating some black holes
       }
@@ -57,14 +53,14 @@ class Hole {
     curhole = document.getElementById("hole" + this.id);
     curholeBound = curhole.getBoundingClientRect();
     if (
-      curholeBound.right + speedX >= boardBounds.right ||
-      curholeBound.left + speedX <= boardBounds.left
+      curholeBound.right + speedX*2 >= boardBounds.right ||
+      curholeBound.left + speedX*2 <= boardBounds.left
     ) {
       this.velY = -this.velY;
     }
     if (
-      curholeBound.bottom + speedY >= boardBounds.bottom ||
-      curholeBound.top + speedY <= boardBounds.top
+      curholeBound.bottom + speedY*2 >= boardBounds.bottom ||
+      curholeBound.top + speedY*2 <= boardBounds.top
     ) {
       this.velX = -this.velX;
     }
@@ -79,15 +75,18 @@ function Holes() {
     holes[i].movehole();
   }
   for (let i = 0; i < holesarr.length; i++) {
+    ballBounds = ball.getBoundingClientRect();
     let current = holesarr[i];
     let currHole = document.getElementById("hole" + current);
     let currentHoleBound = currHole.getBoundingClientRect();
-    ballBounds = ball.getBoundingClientRect();
+    let ballR=ballBounds.right-ballBounds.x
+    let holeR=currentHoleBound.right-currentHoleBound.x
     let dx = currentHoleBound.x - ballBounds.x;
     let dy = currentHoleBound.y - ballBounds.y;
-    result = dx * dx + dy * dy;
-    if (result < 900) {
-      currHole.classList.add("hidden_hole");
+    let distanse = dx * dx + dy * dy;
+    let sumOfRays=ballR*ballR+holeR*holeR
+    if (distanse < sumOfRays) {
+      currHole.classList.add("hidden");
       score.pop();
       console.log(score);
       if (currHole.classList.contains("black_hole")) {
@@ -100,17 +99,27 @@ function Holes() {
   }
 }
 function onDeviceMove() {
-  //moving ball
+  moveBall()
+  Holes();
+  window.requestAnimationFrame(onDeviceMove);
+}
+startButton.addEventListener("click", function () {     ///start game
+  startButton.classList.toggle("active_start");
+  if (startButton.classList.contains("active_start")) {
+    gameStart = true;
+    onDeviceMove();
+  }
+  createHoles();
+});
+function moveBall(){
+    //moving ball
   boardBounds = main.getBoundingClientRect(); // borders of board and ball
   ballBounds = ball.getBoundingClientRect();
-  console.log("x:", ballBounds.x, "y:", ballBounds.y);
-  //   console.log(boardBounds.height - ballBoundsHeight);s
 
   if (
-    ballBounds.top + speedX > boardBounds.top &&
+    ballBounds.top + speedX > boardBounds.top &&        //limits for the ball
     ballBounds.bottom + speedX < boardBounds.bottom
   ) {
-    //limits for the ball
     ballTop += speedX;
     ball.style.top = ballTop + "px";
   }
@@ -121,30 +130,22 @@ function onDeviceMove() {
     ballleft += speedY;
     ball.style.left = ballleft + "px";
   }
-  Holes();
-  // movehole();
-  window.requestAnimationFrame(onDeviceMove);
 }
-startButton.addEventListener("click", function () {
-  startButton.classList.toggle("active_start");
-  if (startButton.classList.contains("active_start")) {
-    gameStart = true;
-    onDeviceMove();
-  }
-  while (holes.length < 20) {
-    counter++;
-    if (counter < 5) some.push(random(0, 20));
-    holesarr.push(counter);
-    score.push(counter);
-    let hole = new Hole(
-      counter, //id
-      random(ballBounds.height, boardBounds.height - ballBounds.height * 2), //position y // top bottom
-      random(ballBounds.width, boardBounds.width - ballBounds.width * 2), //position x //left right
-      random(-1, 1), //speed x
-      random(-1, 1), //speed y
-      `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})` //color
-    );
-    hole.createhole();
-    holes.push(hole);
-  }
-});
+function createHoles(){
+    while (holes.length < 20) {
+        counter++;
+        if (counter < 5) someBlackHoles.push(random(0, 20));
+        holesarr.push(counter);
+        score.push(counter);
+        let hole = new Hole(
+          counter, //id
+          random(ballBounds.height, boardBounds.height - ballBounds.height * 2), //position y // top bottom
+          random(ballBounds.width, boardBounds.width - ballBounds.width * 2), //position x //left right
+          random(-1, 1), //speed x
+          random(-1, 1), //speed y
+          `rgb(${random(0, 255)},${random(0, 255)},${random(0, 255)})`, //color
+        );
+        hole.createhole();
+        holes.push(hole);
+      }    
+    }

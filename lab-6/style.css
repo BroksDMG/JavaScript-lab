@@ -12,7 +12,7 @@ body{
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    width: 130vh;
+    width: 160vh;
     height: 80vh;
     border: 2px solid white;
 }
@@ -25,7 +25,10 @@ body{
     top: 50%;
     box-shadow: 0 0 10px 5px#08f;
     border-radius: 50%;
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
 }
 .hole{
     position: absolute;
@@ -47,6 +50,14 @@ body{
 .active_start{
     background-color: green;
 }
-.hidden_hole{
+.hidden{
     display: none;
+}
+@media(max-width:950px){
+    .ball{
+        height: 20px;
+        width: 20px;}
+    .hole{
+        height: 20px;
+        width: 20px;}
 }
