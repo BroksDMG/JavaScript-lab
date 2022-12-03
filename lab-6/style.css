@@ -38,7 +38,7 @@ body{
     border: 3px;
     border-radius: 50%;
 }
-.start_button{
+.button{
     height: 30px;
     width: 80px;
     background-color: white;
@@ -47,11 +47,27 @@ body{
     margin-top: 3vh;
     cursor: pointer;
 }
+.restart_conteiner{
+    display: flex;
+    justify-content: center;
+}
 .active_start{
     background-color: green;
 }
-.hidden{
-    display: none;
+
+.time_conteiner{
+    display: flex;
+    justify-content: center;
+}
+.time{
+    font-size: 15vh;
+    color: white;
+}
+.time_text{
+    display: flex;
+    justify-content: center;
+    font-size: 10vh;
+    color: white;
 }
 @media(max-width:950px){
     .ball{
@@ -60,4 +76,7 @@ body{
     .hole{
         height: 20px;
         width: 20px;}
+}
+.hidden{
+    display: none;
 }
