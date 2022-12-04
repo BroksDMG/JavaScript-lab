@@ -28,7 +28,7 @@ let startTime
 let endTime
 let gameEnd=false;
 let scoreArr=[];
-let ballquantity=2;
+let ballquantity=20;
 let resSec =0,resMin=0;
 let currentHoleBound;
 function changePosition(e) {        // ball speed
