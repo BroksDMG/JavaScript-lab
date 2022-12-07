@@ -1,28 +1,34 @@
+'use strict';
+import Ball from "./ball.js";
 const canvas =document.querySelector('canvas');
-
 const width = window.innerWidth;
 const height = window.innerHeight;
-
 canvas.width=width;
 canvas.height=height;
-
 const ctx = canvas.getContext('2d');
-
-class Ball {
-    constructor(x,y,speedx,speedy,radius,color){
-        this.x =x;
-        this.y =y;
-        this.speedx= speedx;
-        this.speedy=speedy;
-        this.radius=radius;
-        this.color=color;
-    }
-    drawBall(){
-        ctx.beginPath();
-        ctx.fillStyle=this.color;
-        ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
-        ctx.fill();
-    }
+function random(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-let ball = new Ball(100,100,5,5,20,'rgb(0,255,0)');
-ball.drawBall();
+const balls=[];
+while(balls.length<25){
+    let size =random(10,25)
+    let ball = new Ball(
+        random(size,width-size),
+        random(size,height-size),
+        5,
+        5,
+        20,
+        'rgb(0,255,0)');
+    balls.push(ball);
+}
+
+function animation(){
+    ctx.fillStyle='rgba(0,0,0,0.25'
+    ctx.fillRect(0,0,width,height)
+    for(let i =0;i<balls.length;i++){
+        balls[i].drawBall();
+        balls[i].moveBall();
+    }
+    requestAnimationFrame(animation);
+}
+animation();
