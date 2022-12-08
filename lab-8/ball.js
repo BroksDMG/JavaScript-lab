@@ -17,8 +17,11 @@ export default class Ball {
     }
     drawBall(){
         ctx.beginPath();
-        ctx.fillStyle=this.color;
+        // ctx.fillStyle=this.color;
         // ctx.fillStyle='rgb(0,0,0)';
+        ctx.shadowColor=this.color
+        ctx.shadowBlur=15;
+        
         ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
         ctx.fill();
     }
