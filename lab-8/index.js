@@ -1,12 +1,15 @@
 'use strict';
 import Ball from "./ball.js";
+console.log(Ball);
 const canvas =document.getElementById('canvas');
+const start =document.querySelector('.start');
+const restart =document.querySelector('.restart');
 const width = window.innerWidth;
 const height = window.innerHeight;
 canvas.width=width;
 canvas.height=height;
 const ctx = canvas.getContext('2d');
-const distansey=height*0.150;
+const distansey=height*0.2;
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -17,7 +20,7 @@ function drawLine(x1,y1,x2,y2){
     ctx.stroke();
 }
 const balls=[];
-while(balls.length<145){
+while(balls.length<75){
     let size =random(10,15)
     let ball = new Ball(
         random(size,width-size),

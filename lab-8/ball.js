@@ -17,7 +17,7 @@ export default class Ball {
     }
     drawBall(){
         ctx.beginPath();
-        // ctx.fillStyle=this.color;
+        ctx.fillStyle='rgb(0,0,0)';
         // ctx.fillStyle='rgb(0,0,0)';
         ctx.shadowColor=this.color
         ctx.shadowBlur=15;
