@@ -52,3 +52,9 @@ function animation(){
     requestAnimationFrame(animation);
 }
 animation();
+start.addEventListener('click',function(){
+
+})
+restart.addEventListener('click',function(){
+    
+})
