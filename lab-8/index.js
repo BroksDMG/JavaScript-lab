@@ -1,13 +1,15 @@
 'use strict';
 import Ball from "./ball.js";
-console.log(Ball);
 const canvas =document.getElementById('canvas');
 const start =document.querySelector('.start');
 const restart =document.querySelector('.restart');
+const slider =document.getElementById('myRange');
+const output =document.getElementById('value');
 const width = window.innerWidth;
 const height = window.innerHeight;
 canvas.width=width;
 canvas.height=height;
+let numberOfballs;
 const ctx = canvas.getContext('2d');
 const distansey=height*0.2;
 function random(min, max) {
@@ -20,21 +22,25 @@ function drawLine(x1,y1,x2,y2){
     ctx.stroke();
 }
 const balls=[];
-while(balls.length<75){
-    let size =random(10,15)
-    let ball = new Ball(
-        random(size,width-size),
-        random(size,height-size),
-        random(-2,1),
-        random(-2,1),
-        size,
-        `rgb(
-            ${random(0,255)},
-            ${random(0,255)},
-            ${random(0,255)})`);
-    balls.push(ball);
+function createBall(){
+    while(balls.length<numberOfballs){
+        let size =random(10,15)
+        let ball = new Ball(
+            random(size,width-size),
+            random(size,height-size),
+            random(-2,1),
+            random(-2,1),
+            size,
+            `rgb(
+                ${random(0,255)},
+                ${random(0,255)},
+                ${random(0,255)})`);
+        balls.push(ball);
+    }
 }
+
 function animation(){
+
     ctx.fillStyle='rgba(230,230,250)'
     ctx.fillRect(0,0,width,height)
     for(let i =0;i<balls.length;i++){
@@ -52,7 +58,10 @@ function animation(){
     requestAnimationFrame(animation);
 }
 start.addEventListener('click',function(){
+    numberOfballs=slider.value
     animation();
+    console.log(numberOfballs);
+    createBall();
 })
 restart.addEventListener('click',function(){
 
