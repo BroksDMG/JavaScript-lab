@@ -3,15 +3,16 @@ import Ball from "./ball.js";
 const canvas =document.getElementById('canvas');
 const start =document.querySelector('.start');
 const restart =document.querySelector('.restart');
-const slider =document.getElementById('myRange');
-const output =document.getElementById('value');
+const ballslider =document.getElementById('ballRange');
+const lineSlider = document.getElementById('lineRange');
 const width = window.innerWidth;
 const height = window.innerHeight;
 canvas.width=width;
 canvas.height=height;
 let numberOfballs;
+let balls;
 const ctx = canvas.getContext('2d');
-const distansey=height*0.2;
+let distansey;
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -21,7 +22,7 @@ function drawLine(x1,y1,x2,y2){
     ctx.lineTo(x2,y2);
     ctx.stroke();
 }
-const balls=[];
+;
 function createBall(){
     while(balls.length<numberOfballs){
         let size =random(10,15)
@@ -57,12 +58,28 @@ function animation(){
     }
     requestAnimationFrame(animation);
 }
+function endAnimation(){
+      balls=[]
+      numberOfballs=0;
+      distansey=0;
+}
 start.addEventListener('click',function(){
-    numberOfballs=slider.value
+    balls=[];
+    numberOfballs=ballslider.value
+    distansey=height*lineSlider.value/100;
+    
     animation();
     console.log(numberOfballs);
+    console.log(distansey);
     createBall();
 })
 restart.addEventListener('click',function(){
-
+    endAnimation();
+    numberOfballs=ballslider.value
+    distansey=height*lineSlider.value/100;
+    
+    animation();
+    console.log(numberOfballs);
+    console.log(distansey);
+    createBall()
 })
