@@ -1,11 +1,32 @@
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box n;
+    /* box-sizing: border-box ; */
+}
+body{
+    display: flex;
 }
 .button{
-    display: flex;
-    justify-content: center;
+    left: 2vh;
+    position: absolute;
+    z-index: 3;
+    justify-content: center; 
     width: 13vh;
     height: 4vh;
+}
+.restart{
+    left: 16vh;
+}
+.slideContainer{
+    position: absolute ;
+    z-index: 2;
+    left: 30vh;
+    top: 1vh;
+}
+.line{
+    left:50vh ;
+}
+canvas{
+    position: absolute;
+    z-index: 1;
 }

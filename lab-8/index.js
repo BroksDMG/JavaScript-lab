@@ -41,7 +41,6 @@ function createBall(){
 }
 
 function animation(){
-
     ctx.fillStyle='rgba(230,230,250)'
     ctx.fillRect(0,0,width,height)
     for(let i =0;i<balls.length;i++){
@@ -59,27 +58,20 @@ function animation(){
     requestAnimationFrame(animation);
 }
 function endAnimation(){
-      balls=[]
       numberOfballs=0;
       distansey=0;
 }
-start.addEventListener('click',function(){
+function initAnimation(){
     balls=[];
     numberOfballs=ballslider.value
     distansey=height*lineSlider.value/100;
-    
     animation();
     console.log(numberOfballs);
     console.log(distansey);
     createBall();
-})
+}
+start.addEventListener('click',initAnimation);
 restart.addEventListener('click',function(){
     endAnimation();
-    numberOfballs=ballslider.value
-    distansey=height*lineSlider.value/100;
-    
-    animation();
-    console.log(numberOfballs);
-    console.log(distansey);
-    createBall()
+    initAnimation();
 })
