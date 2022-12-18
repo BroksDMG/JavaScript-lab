@@ -36,3 +36,4 @@ export default class Ball {
         this.y+=this.speedy;
     }
 }
+export{canvas,width,height,ctx};

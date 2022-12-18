@@ -1,18 +1,24 @@
 'use strict';
 import Ball from "./ball.js";
-const canvas =document.getElementById('canvas');
+import { ctx,width,height,canvas } from "./ball.js";
 const start =document.querySelector('.start');
 const restart =document.querySelector('.restart');
 const ballslider =document.getElementById('ballRange');
 const lineSlider = document.getElementById('lineRange');
-const width = window.innerWidth;
-const height = window.innerHeight;
-canvas.width=width;
-canvas.height=height;
+const ballOutput = document.getElementById('ballValue');
+const lineOutput = document.getElementById('lineValue');
+ballOutput.innerHTML=ballslider.value;
+lineOutput.innerHTML=ballslider.value;
 let numberOfballs;
 let balls;
-const ctx = canvas.getContext('2d');
 let distansey;
+////value under the sliders
+ballslider.oninput =function(){
+    ballOutput.innerHTML=this.value;
+}
+lineSlider.oninput =function(){
+    lineOutput.innerHTML=this.value;
+}
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
