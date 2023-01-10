@@ -11,6 +11,8 @@ const apiKey ='e405c2dbb78e5a79771cb55742d2ade1';
 let cityInput;
 function weather(){
     card.innerHTML=`
+    <input type="text" class="search-bar">
+    <button class="btn search-btn"></button>
     <div class="weather">
         <h2 class="city">Weather in Krakow</h2>
         <div class="temp">51*C</div>
