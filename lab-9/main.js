@@ -7,7 +7,7 @@ const card =document.querySelector(".card");
 const apiKey ='e405c2dbb78e5a79771cb55742d2ade1';
 const weatherCardContainer=document.querySelector('.weather-container')
 let cityData
-
+let removeBtns;
 
 let cityInput;
 let cities=localStorage.getItem('cities')
@@ -20,10 +20,11 @@ searchBTN.addEventListener('click',function(){
     .then((res)=>res.json())
     .then(data=>cityData=data)
     .then(()=>{
-        localStorage.setItem(cityData.name,JSON.stringify(cityData))})
+        localStorage.setItem([cityData.name,],JSON.stringify(cityData))})
+    
         // cities.push(data)
     .then(()=>weather(JSON.parse(localStorage.getItem(cityData.name))))
-    console.log(cities);
+    // console.log(cities);
 });
 
 function weather(data){
@@ -31,6 +32,7 @@ function weather(data){
     weatherCard.classList.add('weather')
     
         const html=`
+        <button class="remove">X</button>
         <h2 class="city">Weather in ${data.name}</h2>
         <div class="temp">${data.main.temp}°C</div>
         <img src="https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png"" alt="" class="icon">
@@ -42,15 +44,32 @@ function weather(data){
     weatherCardContainer.appendChild(weatherCard)
     
     save(data.name)
+    removeBtns= document.querySelectorAll(".remove");
+    for (const removeBtn of removeBtns) {
+        removeBtn.addEventListener('click',remove)
+    }
     
 }
 
-
+function remove(){
+    if(cities.length===0)return;
+    for(let city of cities){
+       
+        
+        const index= cities.findIndex(c=>c.name===city.name)
+        cities.splice(index,1)
+        localStorage.setItem('cities',cities)
+        JSON.parse(localStorage.getItem(city))
+        
+    }
+    
+}
 function save(city){
     if(cities.includes(city)) return
     if(cities.length>9)cities.pop();
     cities.unshift(city)
     localStorage.setItem('cities',cities)
+    
 }
 
 function show(){
@@ -61,6 +80,7 @@ function show(){
     }
 }
 show()
+
 
 
 
