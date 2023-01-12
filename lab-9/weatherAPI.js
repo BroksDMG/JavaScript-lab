@@ -1,7 +1,7 @@
 export default class WeatherApi{
     constructor(name){
         this.name=name;
-        
+        const 
     }
     getWeather(){
         const apiKey ='e405c2dbb78e5a79771cb55742d2ade1';
