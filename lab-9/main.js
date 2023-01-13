@@ -60,7 +60,6 @@ function remove(){
         cities.splice(index,1)
         localStorage.setItem('cities',cities)
         JSON.parse(localStorage.getItem(city))
-        
     }
     
 }

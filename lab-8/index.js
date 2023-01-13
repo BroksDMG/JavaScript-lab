@@ -48,7 +48,7 @@ function createBall(){
 
 function animation(){
     ctx.fillStyle='rgba(230,230,250)'
-    ctx.fillRect(0,0,width,height)
+    // ctx.fillRect(0,0,width,height)
     for(let i =0;i<balls.length;i++){
         balls[i].drawBall();
         balls[i].moveBall();
