@@ -1,5 +1,10 @@
-const notesContainer =document.getElementById('app')
+const notesContainer =document.querySelector('.notes')
 const addBtn=document.querySelector('.notes__add')
+
+getNotes().forEach(note=>{
+    const noteElement= createNoteElement(note.id,note.content);
+    notesContainer.insertBefore(noteElement,addBtn);
+})
 
 function getNotes(){
     return JSON.parse(localStorage.getItem("notes-container")||"[]");
@@ -9,24 +14,32 @@ function saveNotes(notes){
     localStorage.setItem("notes-container",JSON.stringify(notes))
 }
 function createNoteElement(id,content){
-    const elemtntNoteList=document.createElement('div')
+    const elementNoteList=document.createElement('div')
 
-    elemtntNoteList.classList.add('notes__list-item');
-    elemtntNoteList.value=content;
-    elemtntNoteList.placeHolder="notes__lsit"
+    elementNoteList.classList.add('notes__list-item');
+    elementNoteList.placeHolder="Empty note"
+    elementNoteList.value=content
 
-    elemtntNoteList.addEventListener("change",function(){
-        updateNote(id,Element.value);
+    elementNoteList.addEventListener("change",()=>{
+        updateNote(id,elementNoteList.value);
     })
 
-    elemtntNoteList.addEventListener("dblclick",function(){
-
+    elementNoteList.addEventListener("dblclick",()=>{
+        const doDelete = confirm("Are u sure u wish to delete this note?")
+        if(doDelete){
+            deleteNote(note,elementNoteList)
+        }
     })
 
-    return elemtntNoteList
+    return elementNoteList
 
 }
 
-function updateNote(id,content){
-
+function updateNote(id,newKontent){
+    console.log("updateing note..");
+    console.log(id,newKontent);
+}
+function deleteNote(id,element){
+    console.log("deleting note..");
+    console.log(id,element);
 }
