@@ -5,32 +5,23 @@ const colorsbtns=document.querySelectorAll('.btncolor');
 const notesBody= document.querySelector('.notes__body')
 const notesTitle= document.querySelector('.notes__title')
 getNotes().forEach(note=>{
-    createNoteElement(note.id,note.content);
+    createNoteElement(note);
 })
 
 function getNotes(){
     return JSON.parse(localStorage.getItem("notes-container")||"[]");
 }
-function notesPreview(){
-    let colorValue
-    for(let btn of colorsbtns){
-        btn.addEventListener("click",()=>{
-            colorValue= btn.contains
-            console.log(colorValue)
-        })
-    }
-    
 
-}
-notesPreview();
 addBtn.addEventListener("click",addNote);
 function addNote(){
     const notes=getNotes();
     const noteObject={
         id:Math.floor(Math.random()*100000),
-        content: ""
+        content: notesBody.value,
+        title:notesTitle.value,
+        
     }
-    createNoteElement(noteObject.id,noteObject.content)
+    createNoteElement(noteObject)
     notes.push(noteObject);
     saveNotes(notes)
 
@@ -38,26 +29,22 @@ function addNote(){
 function saveNotes(notes){
     localStorage.setItem("notes-container",JSON.stringify(notes))
 }
-function createNoteElement(id,content,title){
-    
+function createNoteElement(noteObject){
     const maxBodyLength =60;
-    content=notesBody.contains
-    title=notesTitle.contains
+    console.log(noteObject.title);
     const elementNoteList=document.createElement('div');
     const html=`
     <div class="notes__list-item >
-    <div class="notes__small-title">${title}</div>
+    <div class="notes__small-title">${noteObject.title}</div>
     <div  class="notes__small-body">
-    ${content.substring(0,maxBodyLength)}
-    ${content.length>maxBodyLength?"...":""}
+    ${noteObject.content.substring(0,maxBodyLength)}
+    ${noteObject.content.length>maxBodyLength?"...":""}
     </div>
     <div class="notes__small-updated">date</div>
     </div>`
     elementNoteList.classList.add('notes__list-item');
     elementNoteList.innerHTML=html;
     notesList.append(elementNoteList);
-
-
     elementNoteList.addEventListener("change",()=>{
         updateNote(id,elementNoteList.value);
     })
@@ -65,7 +52,7 @@ function createNoteElement(id,content,title){
     elementNoteList.addEventListener("dblclick",()=>{
         const doDelete = confirm("Are u sure u wish to delete this note?")
         if(doDelete){
-            deleteNote(id,elementNoteList)
+            deleteNote(noteObject.id,elementNoteList)
         }
     })
     elementNoteList.addEventListener('click',()=>{
