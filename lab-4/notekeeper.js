@@ -15,10 +15,12 @@ function getNotes(){
 addBtn.addEventListener("click",addNote);
 function addNote(){
     const notes=getNotes();
+
     const noteObject={
         id:Math.floor(Math.random()*100000),
         content: notesBody.value,
         title:notesTitle.value,
+        time:time(),
         
     }
     createNoteElement(noteObject)
@@ -40,7 +42,7 @@ function createNoteElement(noteObject){
     ${noteObject.content.substring(0,maxBodyLength)}
     ${noteObject.content.length>maxBodyLength?"...":""}
     </div>
-    <div class="notes__small-updated">date</div>
+    <div class="notes__small-updated">${noteObject.time}</div>
     </div>`
     elementNoteList.classList.add('notes__list-item');
     elementNoteList.innerHTML=html;
@@ -75,4 +77,10 @@ function deleteNote(id,element){
 
     saveNotes(notes);
     notesList.removeChild(element)
+}
+function time(){
+    let date =new Date();
+    date.setHours(date.getHours()+1)
+    date=date.toISOString().replace("T"," ").slice(0,-5);
+    return date;
 }
