@@ -15,7 +15,7 @@ function getNotes(){
 addBtn.addEventListener("click",addNote);
 function addNote(){
     const notes=getNotes();
-
+    const body=notesBody.contains
     const noteObject={
         id:Math.floor(Math.random()*100000),
         content: notesBody.value,
@@ -34,12 +34,13 @@ function saveNotes(notes){
 function createNoteElement(noteObject){
     const maxBodyLength =60;
     console.log(noteObject.title);
+    console.log(noteObject.content);
     const elementNoteList=document.createElement('div');
     const html=`
     <div class="notes__list-item >
     <div class="notes__small-title">${noteObject.title}</div>
     <div  class="notes__small-body">
-    ${noteObject.content.substring(0,maxBodyLength)}
+    ${noteObject.content }
     ${noteObject.content.length>maxBodyLength?"...":""}
     </div>
     <div class="notes__small-updated">${noteObject.time}</div>
@@ -84,3 +85,10 @@ function time(){
     date=date.toISOString().replace("T"," ").slice(0,-5);
     return date;
 }
+// function color(){
+//     colorsbtns.forEach(color=>{
+//         color.addEventListener("click",()=>{
+//             console.log();
+//         })
+//     })
+// }
